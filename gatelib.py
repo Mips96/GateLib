@@ -879,15 +879,20 @@ def simplifyNumBytes(numBytes, decimalPlaces=2):
 	Examples
 	--------
 	Input
-		"What? Yes...   /THIS/ is a file name!.png"
+		"What? Yes...   <THIS> is: a file name!.png"
 	Output
-		"What_ Yes... _THIS_ is a file name!.png"
+		"What_ Yes... [THIS] is - a file name!.png"
 """
 def slugify(value):
 	value = unicodedata.normalize('NFKD', value)
-	value = re.sub('[\\/:*?"<>|]', '_', value).strip()
+	value = re.sub(':\s', ' - ', value)
+	value = re.sub('\"', '\'', value)
+	value = re.sub('<', '[', value)
+	value = re.sub('>', ']', value)
+	value = re.sub('[\\/*]', '-', value)
+	value = re.sub('[?|]', '_', value)
 	value = re.sub('[\s]+', ' ', value)
-	return value
+	return value.strip()
 
 #########
 # OTHER #

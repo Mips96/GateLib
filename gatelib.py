@@ -890,8 +890,8 @@ def slugify(value):
 	value = re.sub('\"', '\'', value)
 	value = re.sub('<', '[', value)
 	value = re.sub('>', ']', value)
-	value = re.sub('[\\/*]', '-', value)
-	value = re.sub('[?|]', '_', value)
+	value = re.sub('[\\/\*|]', '-', value)
+	value = re.sub('[?]', '_', value)
 	value = re.sub('[\s]+', ' ', value)
 	return value.strip()
 

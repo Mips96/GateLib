@@ -615,7 +615,7 @@ def delete_last_lines(n=1):
 	Example
 	-------
 	Input
-		"MY TITLE", "#"
+		"MY TITLE"
 	Output
 		############
 		# MY TITLE #

@@ -886,6 +886,7 @@ def simplifyNumBytes(numBytes, decimalPlaces=2):
 def slugify(value):
 	value = unicodedata.normalize('NFKD', value)
 	value = re.sub(':\s', ' - ', value)
+	value = re.sub(':', '-', value)
 	value = re.sub('\"', '\'', value)
 	value = re.sub('<', '[', value)
 	value = re.sub('>', ']', value)

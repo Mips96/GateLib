@@ -21,6 +21,8 @@ import re
 		An array of the different possible answers.
 	allowMultiple : bool
 		If True, the user may give multiple answers, each separated by a space. An array of these answers is returned.
+	validChoicesWarning : bool
+		If True, a warning will be printed if there are one or fewer valid answers.
 
 	Returns
 	-------
@@ -31,13 +33,15 @@ import re
 	list (int)
 		An array of ints representing chosen answers.
 """
-def makeChoice(question, options, allowMultiple=False):
+def makeChoice(question, options, allowMultiple=False, validChoicesWarning=True):
 	numChoices = len(options)
 	if numChoices == 0:
-		print("Warning: A question was asked with no valid answers. Returning None.")
+		if validChoicesWarning:
+			print("Warning: A question was asked with no valid answers. Returning None.")
 		return None
 	if numChoices == 1:
-		print("A question was asked with only one valid answer. Returning this answer.")
+		if validChoicesWarning:
+			print("A question was asked with only one valid answer. Returning this answer.")
 		return 1
 	print("\n"+question)
 	for i in range(numChoices):
@@ -895,6 +899,44 @@ def slugify(value):
 	value = re.sub('[\s]+', ' ', value)
 	return value.strip()
 
+"""
+	From https://en.wikibooks.org/wiki/Algorithm_Implementation/Strings/Longest_common_substring#Python
+
+	Returns the longest common substring between two strings.
+
+	Parameters
+	----------
+	s1 : str
+		The first string.
+	s2 : str
+		The second string.
+
+	Returns
+	-------
+	str
+		The longest common substring length.
+
+	Examples
+	--------
+	Input
+		"Microwave oven", "Infrared waves"
+	Output
+		
+"""
+def lcs(s1, s2):
+	m = [[0] * (1 + len(s2)) for i in range(1 + len(s1))]
+	longest, x_longest = 0, 0
+	for x in range(1, 1 + len(s1)):
+		for y in range(1, 1 + len(s2)):
+			if s1[x - 1] == s2[y - 1]:
+				m[x][y] = m[x - 1][y - 1] + 1
+				if m[x][y] > longest:
+					longest = m[x][y]
+					x_longest = x
+			else:
+				m[x][y] = 0
+	return s1[x_longest - longest: x_longest]
+
 #########
 # OTHER #
 #########
@@ -958,6 +1000,9 @@ https://www.geeksforgeeks.org/python-find-most-frequent-element-in-a-list/
 
 delete_last_lines
 https://www.quora.com/How-can-I-delete-the-last-printed-line-in-Python-language
+
+lcs
+https://en.wikibooks.org/wiki/Algorithm_Implementation/Strings/Longest_common_substring#Python
 
 All other functions made by GateGuy
 """
